@@ -3,6 +3,13 @@ import bcrypt from 'bcryptjs';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const requiredEnv = ['DB_HOST', 'DB_PORT', 'DB_USER', 'DB_NAME'];
+for (const key of requiredEnv) {
+  if (!process.env[key]) {
+    throw new Error(`Environment variable ${key} is required for database connections.`);
+  }
+}
+
 export const pool = mysql.createPool({
   host: process.env.DB_HOST,
   port: Number(process.env.DB_PORT),
