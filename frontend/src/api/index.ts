@@ -1,3 +1,5 @@
+/// <reference types="vite/client" />
+
 import axios from 'axios';
 
 const baseURL = (import.meta.env && import.meta.env.VITE_API_URL) || '/api';
