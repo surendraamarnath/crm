@@ -1,6 +1,10 @@
 /// <reference types="vite/client" />
 import axios from 'axios';
-const baseURL = (import.meta.env && import.meta.env.VITE_API_URL) || '/api';
+// If VITE_API_URL is set (e.g. https://crm-rl3e.onrender.com), ensure it targets
+// the backend API prefix `/api`. For local/static builds we keep the `/api` fallback.
+const rawUrl = (import.meta.env && import.meta.env.VITE_API_URL) || '';
+const trimmed = rawUrl.replace(/\/+$/, '');
+const baseURL = trimmed ? `${trimmed}/api` : '/api';
 const api = axios.create({ baseURL });
 api.interceptors.request.use(config => {
     const token = localStorage.getItem('token');
